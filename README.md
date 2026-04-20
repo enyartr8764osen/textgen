@@ -54,9 +54,12 @@ python server.py --model your-model-name
 # Start API server only
 python server.py --api --nowebui
 
-# Listen on all interfaces
-python server.py --listen
+# Listen on all interfaces (useful for local network access)
+python server.py --listen --listen-port 7860
 ```
+
+> **Personal note:** I usually run with `--listen --listen-port 7860 --api` so I can access the UI
+> from other devices on my LAN while also hitting the API from local scripts.
 
 ## API
 
