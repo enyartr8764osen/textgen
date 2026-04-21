@@ -56,10 +56,14 @@ python server.py --api --nowebui
 
 # Listen on all interfaces (useful for local network access)
 python server.py --listen --listen-port 7860
+
+# My usual setup — UI accessible on LAN + API on default port, with a specific model pre-loaded
+python server.py --listen --listen-port 7860 --api --model mistral-7b-instruct
 ```
 
 > **Personal note:** I usually run with `--listen --listen-port 7860 --api` so I can access the UI
 > from other devices on my LAN while also hitting the API from local scripts.
+> Adding `--model mistral-7b-instruct` saves the extra step of loading it through the UI each time.
 
 ## API
 
