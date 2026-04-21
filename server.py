@@ -30,7 +30,8 @@ def parse_arguments():
     )
 
     # Server settings
-    parser.add_argument('--host', type=str, default='127.0.0.1',
+    # Changed default host to 0.0.0.0 so I don't have to pass --listen every time on my home machine
+    parser.add_argument('--host', type=str, default='0.0.0.0',
                         help='Host address to bind the server to')
     parser.add_argument('--port', type=int, default=7860,
                         help='Port number to run the server on')
@@ -68,68 +69,4 @@ def parse_arguments():
     parser.add_argument('--api-key', type=str, default=None,
                         help='API key for authentication (optional)')
     parser.add_argument('--openai-api', action='store_true',
-                        help='Enable OpenAI-compatible API endpoint')
-
-    # UI settings
-    parser.add_argument('--chat', action='store_true',
-                        help='Launch in chat mode by default')
-    parser.add_argument('--darkmode', action='store_true',
-                        help='Enable dark mode for the UI')
-    parser.add_argument('--no-stream', action='store_true',
-                        help='Disable token streaming in the UI')
-
-    # Debug / misc
-    parser.add_argument('--verbose', action='store_true',
-                        help='Enable verbose/debug logging')
-    parser.add_argument('--version', action='version', version='textgen 0.1.0')
-
-    return parser.parse_args()
-
-
-def setup_environment(args):
-    """Configure environment variables and paths based on parsed arguments."""
-    if args.verbose:
-        logging.getLogger().setLevel(logging.DEBUG)
-        logger.debug('Verbose logging enabled')
-
-    if args.listen:
-        args.host = '0.0.0.0'
-        logger.info('Listening on all network interfaces')
-
-    # Ensure model directory exists
-    model_dir = ROOT_DIR / args.model_dir
-    model_dir.mkdir(parents=True, exist_ok=True)
-    logger.debug('Model directory: %s', model_dir)
-
-    return args
-
-
-def main():
-    """Main entry point — parse args, set up environment, and launch the UI."""
-    args = parse_arguments()
-    args = setup_environment(args)
-
-    logger.info('Starting textgen server on %s:%d', args.host, args.port)
-
-    try:
-        # Deferred import so argument parsing is fast
-        from modules.ui import create_interface  # noqa: F401  (module TBD)
-        interface = create_interface(args)
-        interface.queue()
-        interface.launch(
-            server_name=args.host,
-            server_port=args.port,
-            share=args.share,
-            inbrowser=False,
-        )
-    except ImportError as exc:
-        logger.error('Failed to import UI module: %s', exc)
-        logger.error('Make sure all dependencies are installed: pip install -r requirements.txt')
-        sys.exit(1)
-    except KeyboardInterrupt:
-        logger.info('Server stopped by user')
-        sys.exit(0)
-
-
-if __name__ == '__main__':
-    main()
+                        help
