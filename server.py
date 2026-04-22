@@ -33,7 +33,8 @@ def parse_arguments():
     # Changed default host to 0.0.0.0 so I don't have to pass --listen every time on my home machine
     parser.add_argument('--host', type=str, default='0.0.0.0',
                         help='Host address to bind the server to')
-    parser.add_argument('--port', type=int, default=7860,
+    # Changed default port to 7861 to avoid conflicts with other Gradio apps I run locally
+    parser.add_argument('--port', type=int, default=7861,
                         help='Port number to run the server on')
     parser.add_argument('--share', action='store_true',
                         help='Create a public Gradio share link')
@@ -67,6 +68,4 @@ def parse_arguments():
     parser.add_argument('--api-port', type=int, default=5000,
                         help='Port for the REST API server')
     parser.add_argument('--api-key', type=str, default=None,
-                        help='API key for authentication (optional)')
-    parser.add_argument('--openai-api', action='store_true',
-                        help
+                        help='API key for authentication (op',
